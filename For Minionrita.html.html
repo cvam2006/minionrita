@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You - With Love</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-pink: #fde4e8;
+            --soft-cream: #fef9f3;
+            --gold: #d4af87;
+            --dark-text: #5a4a42;
+            --light-text: #8b7b79;
+            --accent-pink: #f4b5c8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Georgia, serif;
+            background: linear-gradient(135deg, var(--soft-cream) 0%, #fdf6f0 100%);
+            color: var(--dark-text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* Smooth fade-in animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes floatGently {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--soft-cream) 0%, var(--primary-pink) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(244, 181, 200, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 135, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            color: var(--dark-text);
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 20px rgba(212, 175, 135, 0.15);
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: var(--light-text);
+            margin-bottom: 30px;
+            font-style: italic;
+            font-weight: 300;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .heart-icon {
+            display: inline-block;
+            color: var(--accent-pink);
+            animation: floatGently 3s ease-in-out infinite;
+            margin: 0 10px;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: fadeIn 1.5s ease-out 0.5s both, shimmer 2s ease-in-out 1s infinite;
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            background: rgba(254, 249, 243, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(90, 74, 66, 0.08);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--dark-text);
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .about, .gratitude, .wishes {
+            background: linear-gradient(135deg, rgba(253, 228, 232, 0.7) 0%, rgba(244, 181, 200, 0.5) 100%);
+            margin: 20px auto;
+            border-radius: 15px;
+            padding: 60px 40px;
+            box-shadow: 0 15px 50px rgba(212, 175, 135, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            animation: fadeInUp 0.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .content-text {
+            font-size: 1.1rem;
+            color: var(--dark-text);
+            line-height: 2;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .content-text strong {
+            color: var(--accent-pink);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 40px;
+            background: linear-gradient(135deg, var(--soft-cream) 0%, var(--primary-pink) 100%);
+        }
+
+        .gallery h2 {
+            color: var(--dark-text);
+            margin-bottom: 50px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .gallery-placeholder {
+            aspect-ratio: 1;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--gold) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(212, 175, 135, 0.2);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .gallery-placeholder:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(212, 175, 135, 0.3);
+        }
+
+        /* Memories Section */
+        .memories {
+            padding: 80px 40px;
+        }
+
+        .memory-card {
+            background: linear-gradient(135deg, #ffffff 0%, rgba(253, 228, 232, 0.3) 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            animation: fadeInUp 0.8s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            border: 1px solid rgba(212, 175, 135, 0.2);
+        }
+
+        .memory-card:hover {
+            transform: translateX(8px) translateY(-4px);
+            box-shadow: 0 15px 40px rgba(212, 175, 135, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            background: linear-gradient(135deg, #ffffff 0%, rgba(244, 181, 200, 0.4) 100%);
+        }
+
+        .memory-card h3 {
+            color: var(--accent-pink);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .memory-card p {
+            color: var(--light-text);
+            margin: 0;
+        }
+
+        /* Letter Section */
+        .letter {
+            background: linear-gradient(135deg, var(--soft-cream) 0%, var(--primary-pink) 100%);
+            padding: 80px 40px;
+        }
+
+        .letter-box {
+            background: linear-gradient(135deg, #ffffff 0%, rgba(253, 228, 232, 0.4) 100%);
+            border-radius: 15px;
+            padding: 50px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(212, 175, 135, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            animation: fadeInUp 0.8s ease-out;
+            border: 2px solid var(--primary-pink);
+            backdrop-filter: blur(10px);
+        }
+
+        .letter-box h3 {
+            text-align: center;
+            color: var(--dark-text);
+            margin-bottom: 30px;
+            font-weight: 300;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+        }
+
+        .letter-content {
+            color: var(--dark-text);
+            line-height: 2;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .letter-signature {
+            text-align: right;
+            color: var(--accent-pink);
+            font-size: 1.2rem;
+            margin-top: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-text);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin: 10px 0;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .footer-hearts {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+                gap: 20px;
+                font-size: 0.85rem;
+            }
+
+            section {
+                padding: 50px 20px;
+            }
+
+            .hero {
+                padding: 30px 20px;
+            }
+
+            .letter-box {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Scroll fade effect */
+        .fade-on-scroll {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About Minionrita</a>
+        <a href="#gratitude" class="nav-link">My Gratitude</a>
+        <a href="#memories" class="nav-link">Our Moments</a>
+        <a href="#letter" class="nav-link">Letter</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>For Minionrita</h1>
+            <p class="subtitle">
+                A tribute to someone <span class="heart-icon">♡</span> truly special
+            </p>
+        </div>
+        <div class="scroll-hint">Scroll to explore</div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>About You</h2>
+        <p class="content-text">
+            You are someone extraordinary—a person whose presence fills the world with warmth and light. 
+            Your kindness, strength, and gentle soul have touched my heart in ways I could never adequately express.
+        </p>
+        <p class="content-text">
+            In you, I see beauty that runs far deeper than the surface. 
+            Your compassion, your laughter, your quiet wisdom—these are the things that make you truly remarkable.
+        </p>
+    </section>
+
+    <!-- Gratitude Section -->
+    <section id="gratitude" class="gratitude">
+        <h2>My Gratitude</h2>
+        <p class="content-text">
+            I am grateful for every moment we share. <strong>Thank you</strong> for being authentically you.
+        </p>
+        <p class="content-text">
+            Thank you for your patience, your understanding, and your gentle spirit. 
+            Thank you for inspiring me to be better, to love deeper, and to appreciate the beauty in ordinary moments.
+        </p>
+        <p class="content-text">
+            I respect who you are, your choices, and your journey. 
+            My admiration for you grows with every passing day.
+        </p>
+    </section>
+
+    <!-- Memories Section -->
+    <section id="memories" class="memories">
+        <h2>Cherished Moments</h2>
+        <div class="memory-card">
+            <h3>✨ Those Quiet Moments</h3>
+            <p>The times when words aren't needed, and just being together says everything.</p>
+        </div>
+        <div class="memory-card">
+            <h3>💫 Your Laughter</h3>
+            <p>The sound of your joy is one of the most beautiful melodies in my life.</p>
+        </div>
+        <div class="memory-card">
+            <h3>✨ Your Kindness</h3>
+            <p>The way you care for others with such genuine compassion never ceases to amaze me.</p>
+        </div>
+        <div class="memory-card">
+            <h3>💫 Your Strength</h3>
+            <p>Watching you overcome challenges with grace and resilience has been truly inspiring.</p>
+        </div>
+    </section>
+
+    <!-- Letter Section -->
+    <section id="letter" class="letter">
+        <h2>A Letter to You</h2>
+        <div class="letter-box">
+            <h3>Dear Minionrita,</h3>
+            <p class="letter-content">
+                This space exists to express the deep affection and respect I, Shivam, hold for you. 
+                There is no pressure here, no expectations—only honest feelings put into words.
+            </p>
+            <p class="letter-content">
+                I want you to know that you deserve all the happiness in the world. 
+                Your happiness matters deeply to me, and I respect every choice you make about your life and future.
+            </p>
+            <p class="letter-content">
+                Whether our paths continue together or take different directions, know that you have profoundly impacted my life. 
+                You have taught me about love, kindness, and what it means to genuinely care for another person.
+            </p>
+            <p class="letter-content">
+                I offer nothing but sincere admiration, unwavering respect, and heartfelt love. 
+                No pressure. No expectations. Just pure, genuine care.
+            </p>
+            <p class="letter-content">
+                You are enough. You have always been enough.
+            </p>
+            <div class="letter-signature">
+                With all my love,<br>
+                ♡ Shivam
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>✨ A tribute created with sincere love and deep respect ✨</p>
+        <div class="footer-hearts">♡ ♡ ♡</div>
+        <p style="font-size: 0.85rem; margin-top: 20px;">
+            This space represents appreciation without burden, love without condition.
+        </p>
+    </footer>
+
+    <script>
+        // Smooth navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // Update active nav on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Fade in effect on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-on-scroll');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
